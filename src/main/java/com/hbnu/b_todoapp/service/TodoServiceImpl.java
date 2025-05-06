@@ -1,45 +1,38 @@
 package com.hbnu.b_todoapp.service;
 
-import com.hbnu.b_todoapp.dao.TodoRepository;
 import com.hbnu.b_todoapp.domain.Todo;
+import com.hbnu.b_todoapp.mapper.TodoMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
-
 @Service
 public class TodoServiceImpl implements TodoService {
-    @Resource
-    private TodoRepository todoRepository;
 
+    @Resource
+    private TodoMapper todoMapper;
 
     @Override
     public List<Todo> getAllTodos() {
-        return todoRepository.findAll();
+        return todoMapper.findAll();
     }
 
     @Override
     public Todo createTodo(Todo todo) {
-        return todoRepository.save(todo);
+        todoMapper.insert(todo);
+        return todo;
     }
 
     @Override
     public Todo updateTodo(Long id, Todo updatedTodo) {
-        return todoRepository.findById(id)
-                .map(todo -> {
-                    todo.setTitle(updatedTodo.getTitle());
-                    todo.setCompleted(updatedTodo.getCompleted());
-                    return todoRepository.save(todo);
-                }).orElseGet(() -> {
-                    updatedTodo.setId(id);
-                    return todoRepository.save(updatedTodo);
-                });
+        updatedTodo.setId(id);
+        todoMapper.update(updatedTodo);
+        return updatedTodo;
     }
 
     @Override
     public void deleteTodo(Long id) {
-        todoRepository.deleteById(id);
+        todoMapper.deleteById(id);
     }
 }
