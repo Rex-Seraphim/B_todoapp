@@ -1,0 +1,13 @@
+package com.hbnu.b_todoapp;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class BTodoappApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}
